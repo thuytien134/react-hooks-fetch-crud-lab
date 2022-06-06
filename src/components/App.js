@@ -6,10 +6,22 @@ import QuestionList from "./QuestionList";
 function App() {
   const [page, setPage] = useState("List");
 
+  const [questions,setQuestions] = useState([])
+
+function handleAddquestion(newquestion){
+  setQuestions([...questions,newquestion])
+}
+
+function handleDelete(deleteQuestion){
+  const updateQuestion = questions.filter(question => question.id !== deleteQuestion.id);
+  setQuestions(updateQuestion)
+}
+
+
   return (
     <main>
       <AdminNavBar onChangePage={setPage} />
-      {page === "Form" ? <QuestionForm /> : <QuestionList />}
+      {page === "Form" ? <QuestionForm onAddQuestion={handleAddquestion}/> : <QuestionList questions={questions} setQuestions={setQuestions} onDelete={handleDelete}/>}
     </main>
   );
 }
